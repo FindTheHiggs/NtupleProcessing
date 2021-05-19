@@ -24,8 +24,8 @@ CNtupAnaSkeleton/CNtupAnaSkeleton.cxx
 
    1. run like eg:
 ```
-./run/RunNtupAna -i GamGam/MC/mc_343981.ggH125_gamgam.GamGam.root -t mini -o YourOutputFile.csv`
+./run/RunNtupAna -i GamGam/MC/mc_343981.ggH125_gamgam.GamGam.root -t mini -o YourOutputFile.csv
 ```
 ```
-./run/RunNtupAna -h # gives help`
+./run/RunNtupAna -h # gives help
 ```

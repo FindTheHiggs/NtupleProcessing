@@ -88,7 +88,7 @@ void NtupAnaSkeleton::analyse(int pNevents) {
 
   // cuts on tight ID and isolation;
   // apply the criterion?
-  bool applyTI = true;
+  bool applyTI = false;
   // if so what should the TI criterion be? (disregarded if applyTI = false) 
   bool TI = true;
   
@@ -139,12 +139,19 @@ void NtupAnaSkeleton::analyse(int pNevents) {
       TLorentzVector y2(0.,0.,0.,0.);
       y1.SetPtEtaPhiE((*photon_pt)[0],(*photon_eta)[0],(*photon_phi)[0],(*photon_E)[0]);
       y2.SetPtEtaPhiE((*photon_pt)[1],(*photon_eta)[1],(*photon_phi)[1],(*photon_E)[1]);
-      myy = (y1+y2).M();
+      myy = (y1+y2).M()/1000.; // GeV
 
-      mOutFile << (*photon_pt)[0] << "," << (*photon_eta)[0] << ","
-               << (*photon_phi)[0] << "," << (*photon_E)[0] << ","
-               << (*photon_pt)[1] << "," << (*photon_eta)[1] << ","
-               << (*photon_phi)[1] << "," << (*photon_E)[1] << "," << myy << std::endl;
+      // drop events with myy very far from the higgs mass peak
+      double myy_low = 105; // GeV
+      double myy_high = 160; // GeV
+      if (myy < myy_low || myy > myy_high){
+        continue;
+      } 
+      
+      mOutFile << (*photon_pt)[0]/1000. << "," << (*photon_eta)[0] << ","
+               << (*photon_phi)[0] << "," << (*photon_E)[0]/1000. << ","
+               << (*photon_pt)[1]/1000. << "," << (*photon_eta)[1] << ","
+               << (*photon_phi)[1] << "," << (*photon_E)[1]/1000. << "," << myy << std::endl;
       
     }
     

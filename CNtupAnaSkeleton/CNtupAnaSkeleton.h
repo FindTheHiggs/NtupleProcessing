@@ -27,12 +27,25 @@ class CNtupAnaSkeleton {
   //your variables and branches here + init them in Init
   //for pointers, intialize to 0
   
-  UInt_t          jet_n;
-  TBranch *b_jet_n = 0;
-  
-  std::vector<float>  *photon_pt=0;
+  UInt_t          photon_n;
+  std::vector<float>   *photon_pt=0;;
+  std::vector<float>   *photon_eta=0;;
+  std::vector<float>   *photon_phi=0;;
+  std::vector<float>   *photon_E=0;;
+  std::vector<bool>    *photon_isTightID=0;;
+  std::vector<float>   *photon_ptcone30=0;;
+  std::vector<float>   *photon_etcone20=0;;
+
+  TBranch        *b_photon_n=0;  //!
   TBranch        *b_photon_pt=0; //!
-  
+  TBranch        *b_photon_eta=0; //!
+  TBranch        *b_photon_phi=0;   //!
+  TBranch        *b_photon_E=0;   //!
+  TBranch        *b_photon_isTightID=0;   //!
+  TBranch        *b_photon_ptcone30=0;   //!
+  TBranch        *b_photon_etcone20=0;   //!
+
+
 };
 
 #endif

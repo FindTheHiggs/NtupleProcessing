@@ -66,8 +66,15 @@ CNtupAnaSkeleton::CNtupAnaSkeleton(const std::string& pInFileName, const std::st
 void CNtupAnaSkeleton::fInit(TTree* pTree) {
 
   // TODO: init branches here
-  pTree->SetBranchAddress("jet_n", &jet_n, &b_jet_n);
+  pTree->SetBranchAddress("photon_n", &photon_n, &b_photon_n);
   pTree->SetBranchAddress("photon_pt",&photon_pt, &b_photon_pt);
+  pTree->SetBranchAddress("photon_eta",&photon_eta, &b_photon_eta);
+  pTree->SetBranchAddress("photon_phi",&photon_phi, &b_photon_phi);
+  pTree->SetBranchAddress("photon_E",&photon_E, &b_photon_E);
+  pTree->SetBranchAddress("photon_isTightID",&photon_isTightID, &b_photon_isTightID);
+  pTree->SetBranchAddress("photon_ptcone30",&photon_ptcone30, &b_photon_ptcone30);
+  pTree->SetBranchAddress("photon_etcone20",&photon_etcone20, &b_photon_etcone20);
+
   return;
 }
 
@@ -89,7 +96,7 @@ void CNtupAnaSkeleton::fAnalyse(int pNevents) {
     if (DEBUG && 0==iEntry%10000) { 
       cout << " .... processing entry "<< iEntry << endl;
     }
-    std::cout << "# jets: " << jet_n << std::endl;
+    std::cout << "# photons: " << photon_n << std::endl;
     for (auto t : (*photon_pt)) {
       std::cout << "photon pt: " << t << std::endl;
     }

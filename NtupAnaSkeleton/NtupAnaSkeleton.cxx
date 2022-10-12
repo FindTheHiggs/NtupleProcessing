@@ -85,6 +85,12 @@ void NtupAnaSkeleton::init(TTree* pTree) {
 // loop over events and fill histograms
 void NtupAnaSkeleton::analyse(int pNevents) {
 
+  // cuts on tight ID and isolation;
+  // apply the criterion?
+  bool applyTI = true;
+  // if so what should the TI criterion be? (disregarded if applyTI = false) 
+  bool TI = true;
+  
   int tAllEntries = (pNevents<0) ? mTree->GetEntries() : pNevents;
 
   if (DEBUG) {
@@ -92,17 +98,50 @@ void NtupAnaSkeleton::analyse(int pNevents) {
   }
   
   // TODO: insert your code here
+  //for (int iEntry = 0; iEntry < 1000; ++iEntry) {
   for (int iEntry = 0; iEntry < tAllEntries; ++iEntry) {
     mTree->GetEntry(iEntry);
     if (DEBUG && 0==iEntry%10000) { 
       cout << " .... processing entry "<< iEntry << endl;
     }
-    mOutFile << "# photons: " << photon_n << std::endl;
-    for (auto t : (*photon_pt)) {
-       mOutFile << "photon pt: " << t << std::endl;
-    }
-  }// end of loop over all entries
+    
+    // example: 
+    //mOutFile << "# photons: " << photon_n << std::endl;
+    //for (auto t : (*photon_pt)) {
+    //   mOutFile << "photon pt: " << t << std::endl;
+    //}
+    //
+    if (2==photon_n) {
+      if (applyTI) {
+        bool isTight = ((*photon_isTightID)[0]==true && (*photon_isTightID)[1]==true);
+        bool isIsolated = true;
+        double y1_ptiso = (*photon_ptcone30)[0]/(*photon_pt)[0];
+        double y2_ptiso = (*photon_ptcone30)[1]/(*photon_pt)[1];
+        double y1_etiso = (*photon_etcone20)[0]/(*photon_pt)[0];
+        double y2_etiso = (*photon_etcone20)[1]/(*photon_pt)[1];
+        double ptiso_relcut = 0.15;
+        double etiso_relcut = 0.2;
+        if (y1_ptiso>=ptiso_relcut || y2_ptiso>=ptiso_relcut
+            || y1_etiso>=etiso_relcut || y2_etiso>=etiso_relcut) {
+          isIsolated = false;
+        }
+        if (TI && (!isTight || !isIsolated)) {
+          continue;
+        }
+        else if (!TI && (isTight && isIsolated)) {
+          continue;
+        }
+      }
 
+      mOutFile << (*photon_pt)[0] << "," << (*photon_eta)[0] << ","
+               << (*photon_phi)[0] << "," << (*photon_E)[0] << ","
+               << (*photon_pt)[1] << "," << (*photon_eta)[1] << ","
+               << (*photon_phi)[1] << "," << (*photon_E)[1] << std::endl;
+      
+    }
+    
+  }// end of loop over all entries
+  
   // all done, clean-up and return
   finalise();
   return;

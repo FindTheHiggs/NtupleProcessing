@@ -1,4 +1,4 @@
-#include "CNtupAnaSkeleton.h"
+#include "NtupAnaSkeleton.h"
 
 #include <fstream>
 #include <iostream>
@@ -42,8 +42,8 @@ int main(int _argc, char **_argv) {
     print_help();    
   }
     
-  CNtupAnaSkeleton tNtupAnaSkeleton(tInFileName,tTreeName,tOutFileName);
-  tNtupAnaSkeleton.fAnalyse();
+  NtupAnaSkeleton tNtupAnaSkeleton(tInFileName,tTreeName,tOutFileName);
+  tNtupAnaSkeleton.analyse();
 
   return 0;
 

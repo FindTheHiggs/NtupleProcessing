@@ -3,6 +3,7 @@
 
 #include <TROOT.h>
 #include <TTree.h>
+#include <fstream>
 
 /*
 
@@ -14,14 +15,16 @@ See README for instructions.
 
  */
 
-class CNtupAnaSkeleton {
+class NtupAnaSkeleton {
 
  public :
   TTree* mTree;
-  std::string mOutFileName;
-  CNtupAnaSkeleton(const std::string& pInFileName, const std::string& pTreeName, const std::string& pOutFileName, const std::string& pInFileList="");
-  void fInit(TTree* pTree);
-  void fAnalyse(int pNevents=-1);
+  std::ofstream mOutFile;
+
+  NtupAnaSkeleton(const std::string& pInFileName, const std::string& pTreeName, const std::string& pOutFileName, const std::string& pInFileList="");
+  void init(TTree* pTree);
+  void analyse(int pNevents=-1);
+  void finalise();
 
   // TODO:
   //your variables and branches here + init them in Init

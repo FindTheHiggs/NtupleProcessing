@@ -3,9 +3,9 @@ LD      = g++
 
 # ana skel. dirs here
 OBJ_DIR = obj
-BIN_DIR = run
-SRC_DIR = CNtupAnaSkeleton
-INC_DIR = CNtupAnaSkeleton
+BIN_DIR = bin
+SRC_DIR = NtupAnaSkeleton
+INC_DIR = NtupAnaSkeleton
 
 ROOTCINT     = rootcint
 ROOTCONFIG   = root-config
@@ -33,7 +33,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cxx
 	$(CXX) $(CXXFLAGS) -c $^ -o $@
 
 # file targets
-OBJECT_AS = $(OBJ_DIR)/CNtupAnaSkeleton.o
+OBJECT_AS = $(OBJ_DIR)/NtupAnaSkeleton.o
 OBJECT_RUNANA=$(OBJ_DIR)/RunNtupAna.o
 
 # main targets

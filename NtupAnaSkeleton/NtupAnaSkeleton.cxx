@@ -1,4 +1,4 @@
-#include "CNtupAnaSkeleton.h"
+#include "NtupAnaSkeleton.h"
 
 #include <TFile.h>
 #include <TChain.h>
@@ -12,10 +12,10 @@ using std::cout;
 using std::endl;
 using std::string;
 
-CNtupAnaSkeleton::CNtupAnaSkeleton(const std::string& pInFileName, const std::string& pTreeName, const std::string& pOutFileName, const std::string& pInFileList) {
+NtupAnaSkeleton::NtupAnaSkeleton(const std::string& pInFileName, const std::string& pTreeName, const std::string& pOutFileName, const std::string& pInFileList) {
 
   if (DEBUG)
-    cout << __FILE__ << "in CNtupAnaSkeleton::CNtupAnaSkeleton " << endl;
+    cout << __FILE__ << "in NtupAnaSkeleton::NtupAnaSkeleton " << endl;
 
   if (""==pInFileList) {
     // get a tree to analyse
@@ -56,14 +56,14 @@ CNtupAnaSkeleton::CNtupAnaSkeleton(const std::string& pInFileName, const std::st
   if (DEBUG) {
     cout << __FILE__ << " init tree " << endl;
   }
-  fInit(mTree);
+  init(mTree);
 
   // setting output file name from command line
-  mOutFileName=pOutFileName;
+  mOutFile.open(pOutFileName.c_str());
 
 }
 
-void CNtupAnaSkeleton::fInit(TTree* pTree) {
+void NtupAnaSkeleton::init(TTree* pTree) {
 
   // TODO: init branches here
   pTree->SetBranchAddress("photon_n", &photon_n, &b_photon_n);
@@ -75,16 +75,17 @@ void CNtupAnaSkeleton::fInit(TTree* pTree) {
   pTree->SetBranchAddress("photon_ptcone30",&photon_ptcone30, &b_photon_ptcone30);
   pTree->SetBranchAddress("photon_etcone20",&photon_etcone20, &b_photon_etcone20);
 
+  // open input file for writing:
+  
+
   return;
-}
+} // end of init
 
 
 // loop over events and fill histograms
-void CNtupAnaSkeleton::fAnalyse(int pNevents) {
+void NtupAnaSkeleton::analyse(int pNevents) {
 
   int tAllEntries = (pNevents<0) ? mTree->GetEntries() : pNevents;
-  // TODO: remove once the output is filled 
-  std::cout << "Your output file will currently not be filled: " << mOutFileName << std::endl; 
 
   if (DEBUG) {
     cout << __FILE__<< "Analyising # entries : "<<tAllEntries<<endl;
@@ -96,13 +97,23 @@ void CNtupAnaSkeleton::fAnalyse(int pNevents) {
     if (DEBUG && 0==iEntry%10000) { 
       cout << " .... processing entry "<< iEntry << endl;
     }
-    std::cout << "# photons: " << photon_n << std::endl;
+    mOutFile << "# photons: " << photon_n << std::endl;
     for (auto t : (*photon_pt)) {
-      std::cout << "photon pt: " << t << std::endl;
+       mOutFile << "photon pt: " << t << std::endl;
     }
-  }// end of loop over all entries 
+  }// end of loop over all entries
 
+  // all done, clean-up and return
+  finalise();
   return;
 
-}// end of fAnalyse
+}// end of analyse
+
+// 
+void NtupAnaSkeleton::finalise() {
+
+  mOutFile.close();
+  return;
+
+}// end of finalise
 

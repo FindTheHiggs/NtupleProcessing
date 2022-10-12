@@ -6,8 +6,8 @@ Use like:
 
    1. compile:
 ```
-
-mkdir run && mkdir obj
+# before 1st compilation, make dirs for object and binary (executable)
+mkdir obj && mkdir bin
 # or whichever method you use to set up ROOT
 lsetup ROOT 
 
@@ -18,14 +18,14 @@ make
 
    1. connect your branches and insert your code in:
 ```
-CNtupAnaSkeleton/CNtupAnaSkeleton.h
-CNtupAnaSkeleton/CNtupAnaSkeleton.cxx
+NtupAnaSkeleton/NtupAnaSkeleton.h
+NtupAnaSkeleton/NtupAnaSkeleton.cxx
 ```
 
    1. run like eg:
 ```
-./run/RunNtupAna -i GamGam/MC/mc_343981.ggH125_gamgam.GamGam.root -t mini -o YourOutputFile.csv
+./bin/RunNtupAna -i GamGam/MC/mc_343981.ggH125_gamgam.GamGam.root -t mini -o YourOutputFile.csv
 ```
 ```
-./run/RunNtupAna -h # gives help
+./bin/RunNtupAna -h # gives help
 ```

@@ -1,0 +1,4 @@
+GamGam/Data/data_A.GamGam.root
+GamGam/Data/data_B.GamGam.root
+GamGam/Data/data_C.GamGam.root
+GamGam/Data/data_D.GamGam.root

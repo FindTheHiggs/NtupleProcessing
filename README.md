@@ -24,7 +24,12 @@ NtupAnaSkeleton/NtupAnaSkeleton.cxx
 
    1. run like eg:
 ```
+# MC:
 ./bin/RunNtupAna -i GamGam/MC/mc_343981.ggH125_gamgam.GamGam.root -t mini -o YourOutputFile.csv
+
+# data:
+./bin/RunNtupAna -l data_list.txt -t mini -o ti_data.csv
+
 ```
 ```
 ./bin/RunNtupAna -h # gives help

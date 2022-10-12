@@ -2,6 +2,7 @@
 
 #include <TFile.h>
 #include <TChain.h>
+#include <TLorentzVector.h>
 
 #include <fstream>
 #include <iostream>
@@ -133,10 +134,17 @@ void NtupAnaSkeleton::analyse(int pNevents) {
         }
       }
 
+      double myy = -999.;
+      TLorentzVector y1(0.,0.,0.,0.);
+      TLorentzVector y2(0.,0.,0.,0.);
+      y1.SetPtEtaPhiE((*photon_pt)[0],(*photon_eta)[0],(*photon_phi)[0],(*photon_E)[0]);
+      y2.SetPtEtaPhiE((*photon_pt)[1],(*photon_eta)[1],(*photon_phi)[1],(*photon_E)[1]);
+      myy = (y1+y2).M();
+
       mOutFile << (*photon_pt)[0] << "," << (*photon_eta)[0] << ","
                << (*photon_phi)[0] << "," << (*photon_E)[0] << ","
                << (*photon_pt)[1] << "," << (*photon_eta)[1] << ","
-               << (*photon_phi)[1] << "," << (*photon_E)[1] << std::endl;
+               << (*photon_phi)[1] << "," << (*photon_E)[1] << "," << myy << std::endl;
       
     }
     

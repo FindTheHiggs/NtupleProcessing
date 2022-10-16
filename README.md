@@ -34,3 +34,9 @@ NtupAnaSkeleton/NtupAnaSkeleton.cxx
 ```
 ./bin/RunNtupAna -h # gives help
 ```
+
+
+   1. Technical details:
+   The following is steered from within analyse() function in NtupAnaSkeleton.cxx: 
+    ..1. TI/NTNT flags: The BDT is trained for the signal hypothesis: ggH125 and background hypothesis: non-tight or non-isolated (NTNI) data. The prediction is then applied to tight and isolated (TI) data, as in actual ATLAS analysis. 
+    ..2. event pre-selection, requiring eg myy cuts. 

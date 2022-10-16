@@ -16,13 +16,13 @@ make
 ```
 
 
-   1. connect your branches and insert your code in:
+   2. connect your branches and insert your code in:
 ```
 NtupAnaSkeleton/NtupAnaSkeleton.h
 NtupAnaSkeleton/NtupAnaSkeleton.cxx
 ```
 
-   1. run like eg:
+   3. run like eg:
 ```
 # MC:
 ./bin/RunNtupAna -i GamGam/MC/mc_343981.ggH125_gamgam.GamGam.root -t mini -o YourOutputFile.csv
@@ -36,7 +36,7 @@ NtupAnaSkeleton/NtupAnaSkeleton.cxx
 ```
 
 
-   1. Technical details:
-   The following is steered from within analyse() function in NtupAnaSkeleton.cxx: 
-    ..1. TI/NTNT flags: The BDT is trained for the signal hypothesis: ggH125 and background hypothesis: non-tight or non-isolated (NTNI) data. The prediction is then applied to tight and isolated (TI) data, as in actual ATLAS analysis. 
-    ..2. event pre-selection, requiring eg myy cuts. 
+Technical details:
+The following is steered from within analyse() function in NtupAnaSkeleton.cxx: 
+1. TI/NTNT flags: The BDT is trained for the signal hypothesis: ggH125 and background hypothesis: non-tight or non-isolated (NTNI) data. The prediction is then applied to tight and isolated (TI) data, as in actual ATLAS analysis. 
+2. event pre-selection, requiring eg myy cuts. 

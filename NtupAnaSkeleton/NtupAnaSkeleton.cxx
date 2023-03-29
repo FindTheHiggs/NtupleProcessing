@@ -72,6 +72,11 @@ void NtupAnaSkeleton::init(TTree* pTree) {
   pTree->SetBranchAddress("photon_eta",&photon_eta, &b_photon_eta);
   pTree->SetBranchAddress("photon_phi",&photon_phi, &b_photon_phi);
   pTree->SetBranchAddress("photon_E",&photon_E, &b_photon_E);
+  pTree->SetBranchAddress("jet_n", &jet_n, &b_jet_n);
+  pTree->SetBranchAddress("jet_pt",&jet_pt, &b_jet_pt);
+  pTree->SetBranchAddress("jet_eta",&jet_eta, &b_jet_eta);
+  pTree->SetBranchAddress("jet_phi",&jet_phi, &b_jet_phi);
+  pTree->SetBranchAddress("jet_E",&jet_E, &b_jet_E);
   pTree->SetBranchAddress("photon_isTightID",&photon_isTightID, &b_photon_isTightID);
   pTree->SetBranchAddress("photon_ptcone30",&photon_ptcone30, &b_photon_ptcone30);
   pTree->SetBranchAddress("photon_etcone20",&photon_etcone20, &b_photon_etcone20);
@@ -86,11 +91,13 @@ void NtupAnaSkeleton::init(TTree* pTree) {
 // loop over events and fill histograms
 void NtupAnaSkeleton::analyse(int pNevents) {
 
+  bool write_jets = false;
   // cuts on tight ID and isolation;
   // apply the criterion?
   bool applyTI = false;
-  // if so what should the TI criterion be? (disregarded if applyTI = false) 
-  bool TI = true;
+  // if so what should the TI criterion be? (disregarded if applyTI = false)
+  // TI = false gives NTNI background data
+  bool TI = false;
   
   int tAllEntries = (pNevents<0) ? mTree->GetEntries() : pNevents;
 
@@ -146,12 +153,37 @@ void NtupAnaSkeleton::analyse(int pNevents) {
       double myy_high = 160; // GeV
       if (myy < myy_low || myy > myy_high){
         continue;
-      } 
-      
+      }
+
+      // scaled values: 
+      /*
+      mOutFile << (*photon_pt)[0]/(myy*1000.) << "," << (*photon_eta)[0] << ","
+               << (*photon_phi)[0] << "," << (*photon_E)[0]/(myy*1000.) << ","
+               << (*photon_pt)[1]/(myy*1000.) << "," << (*photon_eta)[1] << ","
+               << (*photon_phi)[1] << "," << (*photon_E)[1]/(myy*1000.) << "," << myy;
+      */      
       mOutFile << (*photon_pt)[0]/1000. << "," << (*photon_eta)[0] << ","
                << (*photon_phi)[0] << "," << (*photon_E)[0]/1000. << ","
                << (*photon_pt)[1]/1000. << "," << (*photon_eta)[1] << ","
-               << (*photon_phi)[1] << "," << (*photon_E)[1]/1000. << "," << myy << std::endl;
+               << (*photon_phi)[1] << "," << (*photon_E)[1]/1000. << "," << myy;
+
+      if (write_jets) {
+        if (jet_n>1) {
+          mOutFile << "," << (*jet_pt)[0]/1000. << "," << (*jet_eta)[0] << ","
+                   << (*jet_phi)[0] << "," << (*jet_E)[0]/1000.;
+        }
+        else {
+          mOutFile << "," << -9.9 << "," << -9.9 << "," << -9.9 << "," << -9.9;
+        }
+        if (jet_n>2) {
+          mOutFile << "," << (*jet_pt)[1]/1000. << "," << (*jet_eta)[1] << ","
+                   << (*jet_phi)[1] << "," << (*jet_E)[1]/1000.;
+        }
+        else {
+          mOutFile << "," << -9.9 << "," << -9.9 << "," << -9.9 << "," << -9.9;
+        }
+      }
+      mOutFile << std::endl;
       
     }
     
